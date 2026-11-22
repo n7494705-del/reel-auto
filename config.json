@@ -1,0 +1,16 @@
+{
+  "mode": "draft",
+  "ig_user_id": "17841475747017056",
+  "graph_version": "v23.0",
+  "language": "O'zbek tili (lotin yozuvi)",
+  "niche": "qisqa sirli va mistik hikoyalar, oxiri cliffhanger bilan",
+  "style": "sokin, jiddiy, ohangdor diktor; qisqa gaplar",
+  "topics": [],
+  "scenes": 6,
+  "seconds": 45,
+  "voice": "uz-UZ-SardorNeural",
+  "rate": "-5%",
+  "gemini_model": "gemini-2.5-flash",
+  "music_volume": 0.12,
+  "hashtags": ["#hikoya", "#uzbek", "#reels"]
+}
