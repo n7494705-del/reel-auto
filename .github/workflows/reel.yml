@@ -1,0 +1,45 @@
+name: Reel
+on:
+  schedule:
+    - cron: "0 15 * * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "draft yoki auto"
+        required: false
+        default: ""
+permissions:
+  contents: write
+jobs:
+  make-reel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: |
+          pip install edge-tts gTTS
+          which ffmpeg || (sudo apt-get update && sudo apt-get install -y ffmpeg)
+      - name: Video yaratish
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          MODE_OVERRIDE: ${{ github.event.inputs.mode }}
+        run: python generate.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reel
+          path: |
+            out/video.mp4
+            out/caption.txt
+            out/script.json
+          if-no-files-found: ignore
+      - run: |
+          git config user.name "reel-bot"
+          git config user.email "reel-bot@users.noreply.github.com"
+          git add history.json
+          git commit -m "tarix" || echo "o'zgarish yo'q"
+          git push || true
